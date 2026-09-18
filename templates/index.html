@@ -68,8 +68,11 @@ optgroup{font-weight:700}
 <textarea id="hooksTextarea" rows="6" placeholder="Vive frente al mar&#10;Tu nuevo hogar te espera&#10;Última oportunidad en primera línea de playa"></textarea>
 <button type="button" id="saveHooks">Guardar lista de ganchos</button>
 <p id="hooksStatus"><small></small></p>
-<p><small><b>Generar alternativas con IA (local, sin costo)</b> — pegá un texto o subí un archivo .md con información de la propiedad o de la marca, y la IA instalada en este mismo servidor va a sugerir frases gancho nuevas para revisar y agregar a la lista.</small></p>
-<textarea id="hookSourceText" rows="3" placeholder="Pegá aquí una descripción, o subí un archivo .md abajo…"></textarea>
+<p><small><b>Generar alternativas con IA (local, sin costo)</b> — escribí una orden concreta (ej. «Crea 4 frases con puntos de dolor para compradores que no se fían del promotor, sobre propiedades en fase de desarrollo en Marbella»), y/o pegá un texto o subí un archivo .md con información de una propiedad o de la marca como contexto extra. La IA instalada en este mismo servidor va a sugerir frases gancho nuevas para revisar y agregar a la lista.</small></p>
+<label for="hookInstruction">Instrucción para la IA (opcional, pero recomendado)</label>
+<textarea id="hookInstruction" rows="2" placeholder="Ej: Crea 4 frases con puntos de dolor para compradores que no se fían del promotor, sobre el mercado inmobiliario de Marbella"></textarea>
+<label for="hookSourceText">Contexto adicional (opcional)</label>
+<textarea id="hookSourceText" rows="3" placeholder="Pegá aquí una descripción de la propiedad o de la marca, o subí un archivo .md abajo…"></textarea>
 <div class="grid"><div><label for="hookMdFile">Archivo .md (opcional)</label><input id="hookMdFile" type="file" accept=".md,.markdown,text/markdown"></div>
 <div><label for="hookCount">Cuántas frases generar</label><input id="hookCount" type="number" min="1" max="20" value="8"></div></div>
 <button type="button" id="generateHooks">Generar con IA</button>
@@ -173,7 +176,7 @@ loadBrands();
 /* ---- Ganchos (frases gancho guardadas, con IA local opcional) ---- */
 const hookPicker=$('hookPicker'),hookManager=$('hookManager'),toggleHookManager=$('toggleHookManager');
 const hooksTextarea=$('hooksTextarea'),hooksStatus=$('hooksStatus').firstElementChild,saveHooksBtn=$('saveHooks');
-const hookSourceText=$('hookSourceText'),hookMdFile=$('hookMdFile'),hookCount=$('hookCount');
+const hookInstruction=$('hookInstruction'),hookSourceText=$('hookSourceText'),hookMdFile=$('hookMdFile'),hookCount=$('hookCount');
 const generateHooksBtn=$('generateHooks'),hookGenStatus=$('hookGenStatus').firstElementChild,hookSuggestions=$('hookSuggestions');
 function renderHookPicker(hooks){
   const current=hookPicker.value;
@@ -201,11 +204,11 @@ saveHooksBtn.addEventListener('click',async()=>{
   finally{saveHooksBtn.disabled=false}
 });
 generateHooksBtn.addEventListener('click',async()=>{
-  const text=hookSourceText.value.trim(),file=hookMdFile.files[0];
-  if(!text&&!file){hookGenStatus.textContent='Pegá un texto o elegí un archivo .md primero.';return}
+  const instruction=hookInstruction.value.trim(),text=hookSourceText.value.trim(),file=hookMdFile.files[0];
+  if(!instruction&&!text&&!file){hookGenStatus.textContent='Escribí una instrucción, pegá un texto o elegí un archivo .md primero.';return}
   generateHooksBtn.disabled=true;hookGenStatus.textContent='Generando con la IA local… (puede tardar hasta un minuto)';hookSuggestions.replaceChildren();
   try{
-    const body=new FormData();body.append('text',text);body.append('count',hookCount.value||'8');if(file)body.append('file',file);
+    const body=new FormData();body.append('instruction',instruction);body.append('text',text);body.append('count',hookCount.value||'8');if(file)body.append('file',file);
     const data=await jsonResponse(await fetch('/api/hooks/generate',{method:'POST',body}));
     hookGenStatus.textContent=`${data.hooks.length} sugerencias. Elegí las que quieras agregar a tu lista:`;
     for(const h of data.hooks){
