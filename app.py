@@ -729,10 +729,14 @@ def save_hooks():
 
 @app.post('/api/hooks/generate')
 def generate_hooks():
-    """Sugiere frases 'gancho' alternativas a partir de un texto pegado o de
-    un archivo .md subido, usando un modelo de IA instalado en este mismo
-    servidor (Ollama, sin conexion a internet ni claves). No guarda nada por
-    si solo: devuelve sugerencias para que el usuario elija cuales agregar."""
+    """Sugiere frases 'gancho' alternativas usando un modelo de IA instalado
+    en este mismo servidor (Ollama, sin conexion a internet ni claves). Se le
+    puede dar una instruccion libre (una orden concreta, ej. "crea 4 frases
+    con puntos de dolor para compradores que no se fian del promotor"), un
+    texto/archivo .md de contexto (ej. la descripcion de una propiedad), o
+    ambas cosas juntas. No guarda nada por si sola: devuelve sugerencias para
+    que el usuario elija cuales agregar a su banco de ganchos."""
+    instruction = request.form.get('instruction', '').strip()[:500]
     text = request.form.get('text', '').strip()
     md_file = request.files.get('file')
     if md_file and md_file.filename:
@@ -741,18 +745,30 @@ def generate_hooks():
         except Exception:
             return jsonify(error='No se pudo leer el archivo .md.'), 400
     text = text[:8000]
-    if len(text) < 10:
-        return jsonify(error='Pega algo de texto o sube un archivo .md con contenido.'), 400
+    if not instruction and len(text) < 10:
+        return jsonify(error='Escribí una instrucción, o pegá algo de texto / subí un archivo .md con contenido.'), 400
     try:
         count = max(1, min(20, int(request.form.get('count', 8) or 8)))
     except ValueError:
         count = 8
     prompt = (
-        'Eres un copywriter inmobiliario. A partir del siguiente texto, escribe '
-        f'{count} frases "gancho" cortas, llamativas y distintas entre si, en '
-        'espanol, para usar como titular de un anuncio de Instagram/Facebook de '
-        'una propiedad inmobiliaria. Una frase por linea, sin numeros ni guiones '
-        'al principio, maximo 90 caracteres cada una.\n\nTEXTO:\n' + text
+        'Eres un copywriter especializado en marketing inmobiliario en la Costa '
+        'del Sol (zona de Marbella y alrededores). Respondes siempre en espanol.\n\n'
+    )
+    if instruction:
+        prompt += f'Instruccion del usuario: {instruction}\n\n'
+    if text:
+        prompt += f'Contexto adicional (texto o ficha de una propiedad/marca):\n{text}\n\n'
+    if not instruction:
+        prompt += (
+            f'Tarea: a partir del contexto anterior, escribe {count} frases "gancho" '
+            'cortas, llamativas y distintas entre si.\n\n'
+        )
+    prompt += (
+        f'Devolveme exactamente {count} frases (o menos si la instruccion pide un '
+        'numero distinto), en espanol, UNA POR LINEA, sin numeros ni guiones al '
+        'principio, maximo 90 caracteres cada una, listas para usar como titular '
+        'o gancho de un anuncio de Instagram/Facebook.'
     )
     try:
         resp = requests.post(
