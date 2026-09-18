@@ -1,7 +1,12 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Logo Lab · Batch benchmark</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#eff3f7;color:#1b2d3e;font:16px system-ui,sans-serif}main{max-width:1100px;margin:36px auto;padding:24px}small,p{line-height:1.6;color:#54677b}header small{letter-spacing:2px;font-weight:700;color:#18776a}h1{font-size:40px;letter-spacing:-1px;margin:8px 0}h2{margin-top:0;font-size:22px}.card{background:white;border:1px solid #dce4ed;border-radius:18px;padding:24px;margin:22px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px}label{display:block;font-weight:650;margin:12px 0 8px}input,textarea,select{width:100%;font:inherit;border:1px solid #b6c5d0;border-radius:8px;padding:12px}input[type=file]{border-style:dashed}textarea{resize:vertical}button,.download{display:inline-block;border:0;background:#146c60;color:white;padding:12px 18px;border-radius:8px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;margin:8px 8px 0 0}button.secondary{background:#e9eff3;color:#334c61}button:disabled{opacity:.5;cursor:default}fieldset{border:0;margin:0;padding:0;min-width:0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{border:1px solid #dce4ed;padding:16px;border-radius:12px}.stat b{display:block;font-size:25px}.stat span{color:#54677b;font-size:13px}progress{width:100%;height:20px;accent-color:#146c60}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;border-bottom:1px solid #e4eaf0;padding:12px 8px}td:first-child{max-width:230px;overflow-wrap:anywhere}.scroll{overflow:auto}a{color:#11685d}#gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}figure{margin:0;min-width:0;transition:opacity .15s}figure.unapproved{opacity:.35}figure img{width:100%;height:190px;object-fit:contain;background:#f0f3f6;border-radius:10px}figcaption{font-size:13px;overflow-wrap:anywhere}figure label{display:flex;gap:6px;align-items:center;font-size:13px;font-weight:600;margin-top:6px;cursor:pointer}#status{white-space:pre-wrap} [hidden]{display:none!important}
+*{box-sizing:border-box}body{margin:0;background:#eff3f7;color:#1b2d3e;font:16px system-ui,sans-serif}main{max-width:1100px;margin:36px auto;padding:24px}small,p{line-height:1.6;color:#54677b}header small{letter-spacing:2px;font-weight:700;color:#18776a}h1{font-size:40px;letter-spacing:-1px;margin:8px 0}h2{margin-top:0;font-size:22px}.card{background:white;border:1px solid #dce4ed;border-radius:18px;padding:24px;margin:22px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px}.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:22px}
+.hookRow{display:flex;gap:10px;align-items:center;margin-top:8px}.hookRow select{flex:1}.hookRow button{margin:0;flex:none}
+#hookManager{padding:18px 20px}
+.hookSuggestion{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #eef2f5}
+.hookSuggestion:last-child{border-bottom:0}
+.hookSuggestion input[type=checkbox]{width:auto;margin-top:3px}label{display:block;font-weight:650;margin:12px 0 8px}input,textarea,select{width:100%;font:inherit;border:1px solid #b6c5d0;border-radius:8px;padding:12px}input[type=file]{border-style:dashed}textarea{resize:vertical}button,.download{display:inline-block;border:0;background:#146c60;color:white;padding:12px 18px;border-radius:8px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;margin:8px 8px 0 0}button.secondary{background:#e9eff3;color:#334c61}button:disabled{opacity:.5;cursor:default}fieldset{border:0;margin:0;padding:0;min-width:0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{border:1px solid #dce4ed;padding:16px;border-radius:12px}.stat b{display:block;font-size:25px}.stat span{color:#54677b;font-size:13px}progress{width:100%;height:20px;accent-color:#146c60}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;border-bottom:1px solid #e4eaf0;padding:12px 8px}td:first-child{max-width:230px;overflow-wrap:anywhere}.scroll{overflow:auto}a{color:#11685d}#gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}figure{margin:0;min-width:0;transition:opacity .15s}figure.unapproved{opacity:.35}figure img{width:100%;height:190px;object-fit:contain;background:#f0f3f6;border-radius:10px}figcaption{font-size:13px;overflow-wrap:anywhere}figure label{display:flex;gap:6px;align-items:center;font-size:13px;font-weight:600;margin-top:6px;cursor:pointer}#status{white-space:pre-wrap} [hidden]{display:none!important}
 .searchWrap{position:relative}.propertyResults{border:1px solid #b6c5d0;border-radius:8px;margin-top:10px;max-height:480px;overflow:auto;background:#fff}
 .propEntry{border-bottom:1px solid #eef2f5}.propEntry:last-child{border-bottom:0}
 .propRow{padding:10px 12px;cursor:pointer;display:flex;gap:10px;align-items:center}.propRow:hover{background:#f3f7f9}.propEntry.selected .propRow{background:#eaf5f2}
@@ -17,6 +22,10 @@
 .photoTile.excluded .check{background:#fff;color:transparent;border:2px solid #b6c5d0}
 #propertySelectionBar{display:flex;align-items:center;gap:12px;margin-top:10px}
 .filtersRow{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin-top:10px}.filtersRow label{margin:0 0 6px}
+.autoModeBox{background:#f7f9fb;border:1px solid #dce4ed;border-radius:10px;padding:14px 16px;margin:14px 0}
+.autoModeBox label.switch{display:flex;align-items:center;gap:8px;margin:0;font-weight:700;cursor:pointer}
+.autoModeBox label.switch input{width:auto;margin:0}
+.choiceDetail{font-size:12px;color:#54677b}
 .brandRow{display:grid;grid-template-columns:1fr 2fr;gap:22px;align-items:start;margin-top:6px}
 .logoGallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-top:10px}
 .logoTile{position:relative;border:2px solid #dce4ed;border-radius:10px;padding:8px;cursor:pointer;background:#f7f9fb;text-align:center;user-select:none}
@@ -26,7 +35,7 @@
 .logoTile .check{position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:#146c60;color:#fff;font-size:12px;line-height:18px;display:none}
 .logoTile.selected .check{display:block}
 optgroup{font-weight:700}
-@media(max-width:700px){.grid,.grid3,#gallery,.filtersRow,.brandRow{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}main{padding:15px}h1{font-size:32px}}
+@media(max-width:700px){.grid,.grid3,.grid4,#gallery,.filtersRow,.brandRow{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}main{padding:15px}h1{font-size:32px}}
 </style></head><body><main>
 <header><small>LOGO LAB / SERVER BENCHMARK</small><h1>One batch. Every image.</h1><p>Add logos, a title and extra information. Measure how quickly your server processes your photos.</p></header>
 <form id="form" class="card"><fieldset id="fields">
@@ -50,13 +59,34 @@ optgroup{font-weight:700}
 <div><label for="logos">Logos adicionales · PNG transparente (opcional, aparte de la galería)</label><input id="logos" type="file" accept="image/png" multiple><small id="logoCount">No logos selected.</small><br><button type="button" class="secondary" id="clearLogos">Clear logos</button></div></div>
 <p><small>You can add files in several selections. Up to 100 photos and 16 logos per batch (contando los de la galería). Each photo + all logos: up to 80 MB. Photos: at least 256 × 256 px; all images: up to 25 megapixels each.</small></p>
 <label for="title">Title (optional)</label><input id="title" maxlength="150" placeholder="Your headline">
-<div class="grid3">
+<div class="hookRow">
+<select id="hookPicker"><option value="">— Elegir un gancho guardado (se pone como Title) —</option></select>
+<button type="button" class="secondary" id="toggleHookManager">Gestionar ganchos</button>
+</div>
+<div id="hookManager" class="card" hidden>
+<p><small>Pegá aquí tu lista de frases gancho, una por línea, y guardá. Se guardan en este servidor y quedan disponibles para todos los lotes futuros (no se pierden al actualizar la herramienta).</small></p>
+<textarea id="hooksTextarea" rows="6" placeholder="Vive frente al mar&#10;Tu nuevo hogar te espera&#10;Última oportunidad en primera línea de playa"></textarea>
+<button type="button" id="saveHooks">Guardar lista de ganchos</button>
+<p id="hooksStatus"><small></small></p>
+<p><small><b>Generar alternativas con IA (local, sin costo)</b> — pegá un texto o subí un archivo .md con información de la propiedad o de la marca, y la IA instalada en este mismo servidor va a sugerir frases gancho nuevas para revisar y agregar a la lista.</small></p>
+<textarea id="hookSourceText" rows="3" placeholder="Pegá aquí una descripción, o subí un archivo .md abajo…"></textarea>
+<div class="grid"><div><label for="hookMdFile">Archivo .md (opcional)</label><input id="hookMdFile" type="file" accept=".md,.markdown,text/markdown"></div>
+<div><label for="hookCount">Cuántas frases generar</label><input id="hookCount" type="number" min="1" max="20" value="8"></div></div>
+<button type="button" id="generateHooks">Generar con IA</button>
+<p id="hookGenStatus"><small></small></p>
+<div id="hookSuggestions"></div>
+</div>
+<div class="grid4">
 <div><label for="adRef">Referencia</label><input id="adRef" maxlength="40" placeholder="Ej: R1234567"></div>
+<div><label for="adUrbanization">Urbanización</label><input id="adUrbanization" maxlength="80" placeholder="Ej: Magna Torremolinos"></div>
 <div><label for="adZone">Zona (optional)</label><input id="adZone" maxlength="80" placeholder="Ej: Estepona"></div>
 <div><label for="adPrice">Precio (optional)</label><input id="adPrice" maxlength="40" placeholder="Ej: 450.000 €"></div>
 </div>
-<p><small>La referencia siempre se dibuja como una etiqueta en la esquina superior derecha de la foto (junto con zona y precio si los completás), para saber siempre de qué propiedad se trata.</small></p>
+<p><small>La referencia siempre se dibuja como una etiqueta en la esquina superior derecha de la foto (junto con zona y precio si los completás), para saber siempre de qué propiedad se trata. La urbanización no se dibuja en la etiqueta; se agrega al texto de "Additional information" para no saturar la esquina de la foto.</small></p>
 <label for="information">Additional information (optional)</label><textarea id="information" maxlength="500" rows="3" placeholder="Your message, date or description"></textarea>
+<<div class="autoModeBox"><label class="switch" for="autoMode"><input type="checkbox" id="autoMode"> Modo automático (variaciones aleatorias por foto)</label>
+<p id="autoModeHint" hidden><small>Para cada foto del lote, el programa decide al azar y por su cuenta (sin usar la IA, para que sea instantáneo): si pone o no logo, cuál, y en qué esquina; qué tipografía y color de texto usa; si agrega sombra o una banda de color detrás del texto para que se lea mejor sobre fondos con mucho detalle; si incluye el precio, la zona, el título y/o un gancho (elegido al azar de tu lista de ganchos guardada); y a qué red social/formato apunta esa foto. Así cada foto sale distinta, para poder comparar más adelante cuál combinación funciona mejor. <b>La referencia de la propiedad se dibuja siempre</b>, sin excepción. El "Formato de salida" de abajo se ignora en este modo (se elige al azar por foto).</small></p>
+</div>
 <label for="format">Formato de salida</label>
 <select id="format">
 <option value="original">Tamaño original (sin recortar)</option>
@@ -81,7 +111,7 @@ optgroup{font-weight:700}
 <p id="status" role="status" aria-live="polite">Ready.</p><progress id="progress" value="0" max="1"></progress></form>
 <section class="card" id="report" hidden><h2>Batch results</h2><div class="stats" id="stats"></div><p><small>Processing time sums successful photos: image decoding, logo decoding/scaling/overlay, text rendering and PNG disk write (including fsync). Uploads, queue time and ZIP creation are excluded. Processing throughput = completed photos ÷ processing time. Batch elapsed includes uploads, failed attempts and communication. This is a sequential batch test, not a concurrency test or a maximum-capacity estimate.</small></p>
 <button type="button" id="zip" disabled>Download approved as ZIP</button><button type="button" class="secondary" id="csv" disabled>Download timings CSV</button><p id="downloadStatus" role="status"></p>
-<div class="scroll"><table><thead><tr><th>Photo</th><th>Read</th><th>Logos</th><th>Text</th><th>Save</th><th>Total</th><th>Result</th></tr></thead><tbody id="rows"></tbody></table></div></section>
+<div class="scroll"><table><thead><tr><th>Photo</th><th>Read</th><th>Logos</th><th>Text</th><th>Save</th><th>Total</th><th>Detalle</th><th>Result</th></tr></thead><tbody id="rows"></tbody></table></div></section>
 <section class="card" id="previewCard" hidden><h2>Revisión y aprobación</h2><p><small>Revisa cada imagen ya procesada. Todas empiezan marcadas como aprobadas; desmarca las que no quieras incluir en el ZIP.</small></p><button type="button" class="secondary" id="approveAll">Aprobar todas</button><button type="button" class="secondary" id="approveNone">Rechazar todas</button><div id="gallery"></div></section>
 </main><script>
 const $=id=>document.getElementById(id);let photos=[],logos=[],results=[],running=false,stopRequested=false,elapsed=0;
@@ -140,6 +170,63 @@ async function toggleGalleryLogo(logo,tile){
 $('brand').addEventListener('change',()=>{currentBrand=$('brand').value;renderBrand()});
 loadBrands();
 
+/* ---- Ganchos (frases gancho guardadas, con IA local opcional) ---- */
+const hookPicker=$('hookPicker'),hookManager=$('hookManager'),toggleHookManager=$('toggleHookManager');
+const hooksTextarea=$('hooksTextarea'),hooksStatus=$('hooksStatus').firstElementChild,saveHooksBtn=$('saveHooks');
+const hookSourceText=$('hookSourceText'),hookMdFile=$('hookMdFile'),hookCount=$('hookCount');
+const generateHooksBtn=$('generateHooks'),hookGenStatus=$('hookGenStatus').firstElementChild,hookSuggestions=$('hookSuggestions');
+function renderHookPicker(hooks){
+  const current=hookPicker.value;
+  hookPicker.replaceChildren();
+  const blank=document.createElement('option');blank.value='';blank.textContent='— Elegir un gancho guardado (se pone como Title) —';hookPicker.append(blank);
+  for(const h of hooks){const opt=document.createElement('option');opt.value=h;opt.textContent=h;hookPicker.append(opt)}
+  if(hooks.includes(current))hookPicker.value=current;
+}
+let currentHooksList=[];
+async function loadHooks(){
+  try{const data=await jsonResponse(await fetch('/api/hooks'));renderHookPicker(data.hooks);hooksTextarea.value=data.hooks.join('\n');currentHooksList=data.hooks;return data.hooks}
+  catch(err){hooksStatus.textContent='No se pudo cargar la lista de ganchos: '+err.message;return[]}
+}
+loadHooks();
+hookPicker.addEventListener('change',()=>{if(hookPicker.value)$('title').value=hookPicker.value.slice(0,150)});
+toggleHookManager.addEventListener('click',()=>{hookManager.hidden=!hookManager.hidden});
+saveHooksBtn.addEventListener('click',async()=>{
+  const list=hooksTextarea.value.split('\n').map(l=>l.trim()).filter(Boolean);
+  saveHooksBtn.disabled=true;hooksStatus.textContent='Guardando…';
+  try{
+    const data=await jsonResponse(await fetch('/api/hooks',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({hooks:list})}));
+    renderHookPicker(data.hooks);hooksTextarea.value=data.hooks.join('\n');currentHooksList=data.hooks;
+    hooksStatus.textContent=`Guardado: ${data.hooks.length} gancho${data.hooks.length===1?'':'s'}.`;
+  }catch(err){hooksStatus.textContent='Error guardando: '+err.message}
+  finally{saveHooksBtn.disabled=false}
+});
+generateHooksBtn.addEventListener('click',async()=>{
+  const text=hookSourceText.value.trim(),file=hookMdFile.files[0];
+  if(!text&&!file){hookGenStatus.textContent='Pegá un texto o elegí un archivo .md primero.';return}
+  generateHooksBtn.disabled=true;hookGenStatus.textContent='Generando con la IA local… (puede tardar hasta un minuto)';hookSuggestions.replaceChildren();
+  try{
+    const body=new FormData();body.append('text',text);body.append('count',hookCount.value||'8');if(file)body.append('file',file);
+    const data=await jsonResponse(await fetch('/api/hooks/generate',{method:'POST',body}));
+    hookGenStatus.textContent=`${data.hooks.length} sugerencias. Elegí las que quieras agregar a tu lista:`;
+    for(const h of data.hooks){
+      const row=document.createElement('div');row.className='hookSuggestion';
+      const check=document.createElement('input');check.type='checkbox';check.checked=true;
+      const span=document.createElement('span');span.textContent=h;
+      row.append(check,span);hookSuggestions.append(row);
+    }
+    const addBtn=document.createElement('button');addBtn.type='button';addBtn.textContent='Agregar las marcadas a la lista de ganchos';
+    addBtn.onclick=async()=>{
+      const chosen=[...hookSuggestions.querySelectorAll('.hookSuggestion')].filter(r=>r.querySelector('input').checked).map(r=>r.querySelector('span').textContent);
+      if(!chosen.length)return;
+      const merged=[...new Set([...hooksTextarea.value.split('\n').map(l=>l.trim()).filter(Boolean),...chosen])];
+      hooksTextarea.value=merged.join('\n');
+      hookSuggestions.replaceChildren();hookGenStatus.textContent='Agregadas al texto de abajo — apretá "Guardar lista de ganchos" para confirmar.';
+    };
+    hookSuggestions.append(addBtn);
+  }catch(err){hookGenStatus.textContent='Error: '+err.message}
+  finally{generateHooksBtn.disabled=false}
+});
+
 /* ---- Buscador de propiedades (CRM Buil & Fogwill) ---- */
 /* Mismo arbol de zonas / subzonas que el desplegable "Zonas" del admin del CRM
    (buil-fogwill.com/admin/properties), para buscar exactamente igual. */
@@ -162,6 +249,8 @@ function renderSubzoneOptions(){
 }
 renderSubzoneOptions();
 filterZone.addEventListener('change',()=>{renderSubzoneOptions();runSearch()});
+const autoModeBox=$('autoMode'),autoModeHint=$('autoModeHint');
+autoModeBox.addEventListener('change',()=>{autoModeHint.hidden=!autoModeBox.checked;$('format').disabled=autoModeBox.checked});
 let searchTimer=null,searchAbort=null,selectedProperties=new Map(),lastResults=[],propertyExclusions=new Map();
 const money=n=>n==null||n===''?'':new Intl.NumberFormat('es-ES',{maximumFractionDigits:0}).format(Number(n))+' €';
 function includedImages(p){
@@ -280,9 +369,10 @@ $('addSelectedProperties').onclick=async()=>{
   for(const p of list){
     if(p.headline)$('title').value=p.headline.slice(0,150);
     $('adRef').value=(p.ref||'').slice(0,40);
-    $('adZone').value=(p.urbanization||p.zone||'').slice(0,80);
+    $('adZone').value=(p.zone||'').slice(0,80);
+    $('adUrbanization').value=(p.urbanization||'').slice(0,80);
     $('adPrice').value=money(p.price).slice(0,40);
-    const bits=[p.bedrooms?p.bedrooms+' dorm':'',p.bathrooms?p.bathrooms+' baños':'',p.built_area?p.built_area+' m²':'',p.ref?'Ref. '+p.ref:''].filter(Boolean);
+    const bits=[p.urbanization?p.urbanization:'',p.bedrooms?p.bedrooms+' dorm':'',p.bathrooms?p.bathrooms+' baños':'',p.built_area?p.built_area+' m²':'',p.ref?'Ref. '+p.ref:''].filter(Boolean);
     $('information').value=bits.join(' · ').slice(0,500);
     const room=Math.max(0,100-photos.length);
     const urls=includedImages(p).slice(0,room);
@@ -312,7 +402,7 @@ $('addSelectedProperties').onclick=async()=>{
 };
 
 function summary(){const ok=results.filter(r=>r.data),total=ok.reduce((s,r)=>s+r.data.timing.total_ms,0);$('stats').replaceChildren();for(const [label,value] of [['Completed',`${ok.length} / ${photos.length}`],['Failed',results.length-ok.length],['Processing time',number(total/1000)+' s'],['Average / completed photo',ok.length?ms(total/ok.length):'—'],['Processing throughput',total?number(ok.length/(total/1000))+' photos/s':'—'],['Batch elapsed',number(elapsed/1000)+' s']]){const div=document.createElement('div');div.className='stat';const b=document.createElement('b');b.textContent=value;const span=document.createElement('span');span.textContent=label;div.append(b,span);$('stats').append(div)}}
-function addRow(r){const row=$('rows').insertRow();row.insertCell().textContent=r.name;if(r.data){const t=r.data.timing;for(const key of ['decode_ms','logos_ms','text_ms','save_ms','total_ms'])row.insertCell().textContent=ms(t[key]);const link=document.createElement('a');link.href='/results/'+r.data.file+'?download=1';link.textContent='Download PNG';row.insertCell().append(link)}else{const cell=row.insertCell();cell.colSpan=6;cell.textContent='Failed: '+r.error}}
+function addRow(r){const row=$('rows').insertRow();row.insertCell().textContent=r.name;if(r.data){const t=r.data.timing;for(const key of ['decode_ms','logos_ms','text_ms','save_ms','total_ms'])row.insertCell().textContent=ms(t[key]);const detail=row.insertCell();detail.className='choiceDetail';if(r.data.choices){const c=r.data.choices;const bits=[[r.data.red_social,r.data.formato].filter(Boolean).join(' '),'logo: '+(c.logo?'sí'+(c.logo_position?' ('+c.logo_position+')':''):'no'),'fuente: '+(c.font||''),'color: '+(c.color||''),'sombra: '+(c.shadow?'sí':'no'),'banda: '+(c.band?'sí':'no'),'precio: '+(c.price?'sí':'no'),'zona: '+(c.zone?'sí':'no'),'título: '+(c.title?'sí':'no'),'gancho: '+(c.hook?('"'+(c.hook_text||'')+'"'):'no')];detail.textContent=bits.join(' · ')}else{detail.textContent='—'}const link=document.createElement('a');link.href='/results/'+r.data.file+'?download=1';link.textContent='Download PNG';row.insertCell().append(link)}else{const cell=row.insertCell();cell.colSpan=7;cell.textContent='Failed: '+r.error}}
 function previews(){const successful=results.filter(r=>r.data);$('previewCard').hidden=!successful.length;$('gallery').replaceChildren();for(const r of successful){
   const fig=document.createElement('figure');fig.dataset.file=r.data.file;
   const img=document.createElement('img');img.loading='lazy';img.src='/results/'+r.data.file;img.alt='Processed photo: '+r.name;
@@ -326,7 +416,8 @@ $('approveAll').onclick=()=>{for(const box of $('gallery').querySelectorAll('.ap
 $('approveNone').onclick=()=>{for(const box of $('gallery').querySelectorAll('.approveBox')){box.checked=false;box.closest('figure').classList.add('unapproved')}};
 $('form').addEventListener('submit',async e=>{e.preventDefault();if(running)return;if(!photos.length){$('status').textContent='Select at least one photo.';return}const title=$('title').value.trim(),info=$('information').value.trim(),adRef=$('adRef').value.trim(),adZone=$('adZone').value.trim(),adPrice=$('adPrice').value.trim(),format=$('format').value;const allLogos=[...galleryLogos,...logos];if(!allLogos.length&&!title&&!info&&!adRef&&!adZone&&!adPrice){$('status').textContent='Add at least one logo or some text.';return}const logoBytes=allLogos.reduce((s,f)=>s+f.size,0);if(photos.some(p=>p.size+logoBytes>79*1024*1024)){$('status').textContent='Each photo plus logos must be under 79 MB (space is reserved for the upload form).';return}
 running=true;stopRequested=false;results=[];elapsed=0;$('fields').disabled=true;$('submit').disabled=true;$('stop').disabled=false;$('zip').disabled=true;$('csv').disabled=true;$('downloadStatus').textContent='';$('rows').replaceChildren();$('gallery').replaceChildren();$('previewCard').hidden=true;$('report').hidden=false;$('progress').max=photos.length;$('progress').value=0;summary();const start=performance.now();
-try{for(const photo of photos){if(stopRequested)break;$('status').textContent=`Processing ${results.length+1} of ${photos.length}: ${photo.name}`;const body=new FormData();body.append('photo',photo);for(const logo of allLogos)body.append('logos',logo);body.append('title',title);body.append('information',info);body.append('ref',adRef);body.append('zone',adZone);body.append('price',adPrice);body.append('format',format);let row;try{const data=await jsonResponse(await fetch('/process',{method:'POST',body}));row={name:photo.name,data}}catch(err){row={name:photo.name,error:err.message}}results.push(row);addRow(row);elapsed=performance.now()-start;$('progress').value=results.length;summary()}}finally{elapsed=performance.now()-start;summary();running=false;$('fields').disabled=false;$('submit').disabled=false;$('stop').disabled=true;$('csv').disabled=!results.length;$('zip').disabled=!results.some(r=>r.data);$('status').textContent=`${stopRequested?'Stopped':'Finished'}. ${results.filter(r=>r.data).length} completed, ${results.filter(r=>!r.data).length} failed, ${photos.length-results.length} not processed.`;previews()}});
+const autoOn=autoModeBox.checked;
+try{for(const photo of photos){if(stopRequested)break;$('status').textContent=`Processing ${results.length+1} of ${photos.length}: ${photo.name}`;const body=new FormData();body.append('photo',photo);for(const logo of allLogos)body.append('logos',logo);body.append('ref',adRef);body.append('zone',adZone);body.append('price',adPrice);body.append('title',title);let row,endpoint;if(autoOn){body.append('hooks_json',JSON.stringify(currentHooksList));endpoint='/process-auto'}else{body.append('information',info);body.append('format',format);endpoint='/process'}try{const data=await jsonResponse(await fetch(endpoint,{method:'POST',body}));row={name:photo.name,data}}catch(err){row={name:photo.name,error:err.message}}results.push(row);addRow(row);elapsed=performance.now()-start;$('progress').value=results.length;summary()}}finally{elapsed=performance.now()-start;summary();running=false;$('fields').disabled=false;$('submit').disabled=false;$('stop').disabled=true;$('csv').disabled=!results.length;$('zip').disabled=!results.some(r=>r.data);$('status').textContent=`${stopRequested?'Stopped':'Finished'}. ${results.filter(r=>r.data).length} completed, ${results.filter(r=>!r.data).length} failed, ${photos.length-results.length} not processed.`;previews()}});
 $('zip').onclick=async()=>{const approved=[...$('gallery').querySelectorAll('.approveBox:checked')].map(b=>b.dataset.file);if(!approved.length){$('downloadStatus').textContent='No hay ninguna imagen aprobada.';return}$('zip').disabled=true;$('submit').disabled=true;$('downloadStatus').textContent='Preparing ZIP…';try{const data=await jsonResponse(await fetch('/archive',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({files:approved})}));const url='/results/'+data.file+'?download=1';const link=document.createElement('a');link.href=url;link.textContent='Download ZIP ('+approved.length+' imágenes)';$('downloadStatus').replaceChildren(link);link.click()}catch(err){$('downloadStatus').textContent=err.message}finally{$('zip').disabled=false;$('submit').disabled=false}};
 $('csv').onclick=()=>{const quote=value=>'"'+String(value).replace(/"/g,'""')+'"';const safe=value=>/^[=+@\-\t\r]/.test(String(value))?"'"+value:value;const lines=[['photo','status','width','height','read_ms','logos_ms','text_ms','save_ms','total_ms','error'],...results.map(r=>{const t=r.data?.timing;return [safe(r.name),r.data?'ok':'failed',r.data?.width??'',r.data?.height??'',...['decode_ms','logos_ms','text_ms','save_ms','total_ms'].map(k=>t?t[k]:''),safe(r.error||'')]})];const url=URL.createObjectURL(new Blob(['﻿'+lines.map(row=>row.map(quote).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='batch_timings.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 </script></body></html>
