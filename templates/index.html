@@ -6,7 +6,7 @@
 .propEntry{border-bottom:1px solid #eef2f5}.propEntry:last-child{border-bottom:0}
 .propRow{padding:10px 12px;cursor:pointer;display:flex;gap:10px;align-items:center}.propRow:hover{background:#f3f7f9}.propEntry.selected .propRow{background:#eaf5f2}
 .propertyResults img.thumb{width:48px;height:36px;object-fit:cover;border-radius:6px;background:#eef2f5;flex:none}.propertyResults b{display:block;font-size:14px}.propertyResults small{color:#54677b;display:block}.propertyResults input[type=checkbox]{width:auto;flex:none;margin:0}
-.photoToggle{background:none;border:0;color:#146c60;font:inherit;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-top:4px}
+.photoToggle{background:#eaf5f2;border:1px solid #146c60;color:#146c60;font:inherit;font-size:13px;font-weight:700;cursor:pointer;padding:5px 10px;border-radius:6px;margin-top:6px;display:inline-block}.photoToggle:hover{background:#146c60;color:#fff}
 .photoPicker{padding:14px 16px 18px;background:#f7f9fb;border-top:1px dashed #dce4ed}
 .photoPickerHead{margin-bottom:10px;font-size:13px;font-weight:600;color:#334c61}
 .photoGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
@@ -40,12 +40,12 @@ optgroup{font-weight:700}
 <p id="propertyStatus"><small></small></p>
 <div id="propertyResults" class="propertyResults" hidden></div>
 <p id="propertySelectionBar" hidden><button type="button" id="addSelectedProperties">Agregar fotos de las seleccionadas</button><small id="selectedCount"></small></p>
- 
+
 <div class="brandRow">
 <div><label for="brand">Marca</label><select id="brand"></select><p id="brandHint"><small></small></p></div>
 <div><label>Logos de la marca (ya precargados — haz clic para elegir, hasta 16)</label><div id="logoGallery" class="logoGallery"></div><p id="galleryStatus"><small></small></p></div>
 </div>
- 
+
 <div class="grid"><div><label for="photos">Photos</label><input id="photos" type="file" accept="image/jpeg,image/png,image/webp" multiple><small id="photoCount">No photos selected.</small><br><button type="button" class="secondary" id="clearPhotos">Clear photos</button></div>
 <div><label for="logos">Logos adicionales · PNG transparente (opcional, aparte de la galería)</label><input id="logos" type="file" accept="image/png" multiple><small id="logoCount">No logos selected.</small><br><button type="button" class="secondary" id="clearLogos">Clear logos</button></div></div>
 <p><small>You can add files in several selections. Up to 100 photos and 16 logos per batch (contando los de la galería). Each photo + all logos: up to 80 MB. Photos: at least 256 × 256 px; all images: up to 25 megapixels each.</small></p>
@@ -90,7 +90,7 @@ function counts(){$('photoCount').textContent=photos.length+' photos selected';$
 for(const kind of ['photos','logos']){$(kind).addEventListener('change',()=>{const files=Array.from($(kind).files);const max=kind==='photos'?100:16;let old=kind==='photos'?photos:logos;if(kind==='logos'&&galleryLogos.length+old.length+files.length>max){$('status').textContent=`Máximo ${max} logos en total (contando los de la galería). Elige menos.`;$(kind).value='';return}if(old.length+files.length>max){$('status').textContent=`Maximum ${max} ${kind}. Clear the selection or add fewer files.`;$(kind).value='';return}if(kind==='photos')photos.push(...files);else logos.push(...files);$(kind).value='';counts()})}
 $('clearPhotos').onclick=()=>{photos=[];counts()};$('clearLogos').onclick=()=>{logos=[];counts()};$('stop').onclick=()=>{stopRequested=true;$('stop').disabled=true;$('status').textContent='Stopping after the current photo…'};
 async function jsonResponse(res){let data;try{data=await res.json()}catch{throw Error('The server returned an unreadable response. Check its terminal.')}if(!res.ok)throw Error(data.error||`HTTP ${res.status}`);return data}
- 
+
 /* ---- Marca y galería de logos precargados ---- */
 let brands={},currentBrand=null,galleryLogos=[],logoBlobCache=new Map();
 async function loadBrands(){
@@ -139,7 +139,7 @@ async function toggleGalleryLogo(logo,tile){
 }
 $('brand').addEventListener('change',()=>{currentBrand=$('brand').value;renderBrand()});
 loadBrands();
- 
+
 /* ---- Buscador de propiedades (CRM Buil & Fogwill) ---- */
 /* Mismo arbol de zonas / subzonas que el desplegable "Zonas" del admin del CRM
    (buil-fogwill.com/admin/properties), para buscar exactamente igual. */
@@ -224,7 +224,7 @@ function renderPropertyResults(list){
     const picker=document.createElement('div');picker.className='photoPicker';picker.hidden=true;
     let photoToggle=null;
     if(p.image_count>0){
-      photoToggle=document.createElement('button');photoToggle.type='button';photoToggle.className='photoToggle';photoToggle.textContent='Ver fotos ▾';
+      photoToggle=document.createElement('button');photoToggle.type='button';photoToggle.className='photoToggle';photoToggle.textContent=`Elegir fotos (${p.image_count})`;
       info.append(photoToggle);
     }
     row.append(check,img,info);
@@ -240,7 +240,7 @@ function renderPropertyResults(list){
         e.stopPropagation();
         const opening=picker.hidden;
         picker.hidden=!opening;
-        photoToggle.textContent=opening?'Ocultar fotos ▴':'Ver fotos ▾';
+        photoToggle.textContent=opening?'Ocultar fotos':`Elegir fotos (${p.image_count})`;
         if(opening&&!picker.dataset.built){buildPhotoPicker(picker,p,key,refreshFotosLabel);picker.dataset.built='1'}
       });
     }
@@ -310,7 +310,7 @@ $('addSelectedProperties').onclick=async()=>{
   updateSelectionBar();
   $('addSelectedProperties').disabled=false;
 };
- 
+
 function summary(){const ok=results.filter(r=>r.data),total=ok.reduce((s,r)=>s+r.data.timing.total_ms,0);$('stats').replaceChildren();for(const [label,value] of [['Completed',`${ok.length} / ${photos.length}`],['Failed',results.length-ok.length],['Processing time',number(total/1000)+' s'],['Average / completed photo',ok.length?ms(total/ok.length):'—'],['Processing throughput',total?number(ok.length/(total/1000))+' photos/s':'—'],['Batch elapsed',number(elapsed/1000)+' s']]){const div=document.createElement('div');div.className='stat';const b=document.createElement('b');b.textContent=value;const span=document.createElement('span');span.textContent=label;div.append(b,span);$('stats').append(div)}}
 function addRow(r){const row=$('rows').insertRow();row.insertCell().textContent=r.name;if(r.data){const t=r.data.timing;for(const key of ['decode_ms','logos_ms','text_ms','save_ms','total_ms'])row.insertCell().textContent=ms(t[key]);const link=document.createElement('a');link.href='/results/'+r.data.file+'?download=1';link.textContent='Download PNG';row.insertCell().append(link)}else{const cell=row.insertCell();cell.colSpan=6;cell.textContent='Failed: '+r.error}}
 function previews(){const successful=results.filter(r=>r.data);$('previewCard').hidden=!successful.length;$('gallery').replaceChildren();for(const r of successful){
