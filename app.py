@@ -192,7 +192,7 @@ def draw_badge(base, text):
     return box_w + margin
 
 
-def process(photo, logos, title='', information='', fmt_key='original', zone='', price=''):
+def process(photo, logos, title='', information='', fmt_key='original', zone='', price='', ref=''):
     start = time.perf_counter()
     base = decode(photo)
     if min(base.size) < 256:
@@ -215,7 +215,8 @@ def process(photo, logos, title='', information='', fmt_key='original', zone='',
         y = h - margin - rows * cell_h + (i // columns) * cell_h + (cell_h - mark.height) // 2
         base.alpha_composite(mark, (x, y))
     logos_done = time.perf_counter()
-    badge_text = ' · '.join(part for part in (zone, price) if part)
+    ref_text = f'Ref. {ref}' if ref else ''
+    badge_text = ' · '.join(part for part in (ref_text, zone, price) if part)
     reserved = draw_badge(base, badge_text)
     title_width = max(1, w - 2 * margin - reserved)
     draw_text(base, title, (margin, margin, title_width, int(h * .22)), bold=True)
@@ -254,17 +255,18 @@ def run():
     information = request.form.get('information', '').strip()
     zone = request.form.get('zone', '').strip()[:80]
     price = request.form.get('price', '').strip()[:40]
+    ref = request.form.get('ref', '').strip()[:40]
     fmt_key = request.form.get('format', 'original').strip()
     if photo is None or len(logos) > 16:
         return jsonify(error='Choose a photo and up to 16 logos.'), 400
-    if not logos and not title and not information and not zone and not price:
+    if not logos and not title and not information and not zone and not price and not ref:
         return jsonify(error='Add at least one logo or some text.'), 400
     if len(title) > 150 or len(information) > 500:
         return jsonify(error='Title limit: 150 characters. Information limit: 500 characters.'), 400
     photo_data = photo.read()
     logo_data = [logo.read() for logo in logos]
     try:
-        return jsonify(process(photo_data, logo_data, title, information, fmt_key, zone, price))
+        return jsonify(process(photo_data, logo_data, title, information, fmt_key, zone, price, ref))
     except ValueError as exc:
         return jsonify(error=str(exc)), 400
     except (UnidentifiedImageError, Image.DecompressionBombError, Image.DecompressionBombWarning):
@@ -324,15 +326,17 @@ def _normalize_images(images):
 @app.get('/api/search-properties')
 def search_properties():
     """Busca propiedades en el CRM (Lovable/Supabase) por referencia, zona,
-    urbanizacion o titulo, con filtros opcionales de zona, precio maximo y
-    tipologia. Solo lee datos ya pensados como publicos (la vista
-    public_properties de la web de Buil & Fogwill)."""
+    urbanizacion o titulo, con filtros opcionales de zona (y subzona, igual
+    que en el admin del CRM), precio maximo y tipologia. Solo lee datos ya
+    pensados como publicos (la vista public_properties de la web de Buil &
+    Fogwill)."""
     term = _clean_search_term(request.args.get('q', ''))
-    zone_filter = _clean_search_term(request.args.get('zone', ''))
+    zone_filter = request.args.get('zone', '').strip()
+    subzone_filter = request.args.get('subzone', '').strip()
     type_filter = request.args.get('type', '').strip()
     max_price_raw = request.args.get('max_price', '').strip()
 
-    if len(term) < 2 and not zone_filter and not type_filter and not max_price_raw:
+    if len(term) < 2 and not zone_filter and not subzone_filter and not type_filter and not max_price_raw:
         return jsonify(results=[])
 
     params = {
@@ -345,8 +349,13 @@ def search_properties():
         pattern = f'*{term}*'
         fields = ('public_ref', 'title_es', 'title_en', 'zone', 'subzone', 'urbanization', 'location')
         params['or'] = '(' + ','.join(f'{field}.ilike.{pattern}' for field in fields) + ')'
+    # Coincidencia exacta (como en el desplegable de Zonas del admin del
+    # CRM, que tambien filtra por el nombre exacto de zona / subzona, no
+    # por texto libre).
     if zone_filter:
-        params['zone'] = f'ilike.*{zone_filter}*'
+        params['zone'] = f'eq.{zone_filter}'
+    if subzone_filter:
+        params['subzone'] = f'eq.{subzone_filter}'
     if type_filter:
         params['property_type'] = f'eq.{type_filter}'
     if max_price_raw:
