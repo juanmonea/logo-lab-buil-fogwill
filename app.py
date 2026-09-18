@@ -339,7 +339,7 @@ def search_properties():
         'select': 'id,public_ref,title_es,title_en,zone,subzone,urbanization,price,'
                   'bedrooms,bathrooms,built_area,property_type,images',
         'order': 'updated_at.desc',
-        'limit': '8',
+        'limit': '30',
     }
     if len(term) >= 2:
         pattern = f'*{term}*'
