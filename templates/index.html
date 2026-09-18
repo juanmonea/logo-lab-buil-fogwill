@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Logo Lab · Batch benchmark</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#eff3f7;color:#1b2d3e;font:16px system-ui,sans-serif}main{max-width:1100px;margin:36px auto;padding:24px}small,p{line-height:1.6;color:#54677b}header small{letter-spacing:2px;font-weight:700;color:#18776a}h1{font-size:40px;letter-spacing:-1px;margin:8px 0}h2{margin-top:0;font-size:22px}.card{background:white;border:1px solid #dce4ed;border-radius:18px;padding:24px;margin:22px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}label{display:block;font-weight:650;margin:12px 0 8px}input,textarea,select{width:100%;font:inherit;border:1px solid #b6c5d0;border-radius:8px;padding:12px}input[type=file]{border-style:dashed}textarea{resize:vertical}button,.download{display:inline-block;border:0;background:#146c60;color:white;padding:12px 18px;border-radius:8px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;margin:8px 8px 0 0}button.secondary{background:#e9eff3;color:#334c61}button:disabled{opacity:.5;cursor:default}fieldset{border:0;margin:0;padding:0;min-width:0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{border:1px solid #dce4ed;padding:16px;border-radius:12px}.stat b{display:block;font-size:25px}.stat span{color:#54677b;font-size:13px}progress{width:100%;height:20px;accent-color:#146c60}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;border-bottom:1px solid #e4eaf0;padding:12px 8px}td:first-child{max-width:230px;overflow-wrap:anywhere}.scroll{overflow:auto}a{color:#11685d}#gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}figure{margin:0;min-width:0;transition:opacity .15s}figure.unapproved{opacity:.35}figure img{width:100%;height:190px;object-fit:contain;background:#f0f3f6;border-radius:10px}figcaption{font-size:13px;overflow-wrap:anywhere}figure label{display:flex;gap:6px;align-items:center;font-size:13px;font-weight:600;margin-top:6px;cursor:pointer}#status{white-space:pre-wrap} [hidden]{display:none!important}
+*{box-sizing:border-box}body{margin:0;background:#eff3f7;color:#1b2d3e;font:16px system-ui,sans-serif}main{max-width:1100px;margin:36px auto;padding:24px}small,p{line-height:1.6;color:#54677b}header small{letter-spacing:2px;font-weight:700;color:#18776a}h1{font-size:40px;letter-spacing:-1px;margin:8px 0}h2{margin-top:0;font-size:22px}.card{background:white;border:1px solid #dce4ed;border-radius:18px;padding:24px;margin:22px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px}label{display:block;font-weight:650;margin:12px 0 8px}input,textarea,select{width:100%;font:inherit;border:1px solid #b6c5d0;border-radius:8px;padding:12px}input[type=file]{border-style:dashed}textarea{resize:vertical}button,.download{display:inline-block;border:0;background:#146c60;color:white;padding:12px 18px;border-radius:8px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;margin:8px 8px 0 0}button.secondary{background:#e9eff3;color:#334c61}button:disabled{opacity:.5;cursor:default}fieldset{border:0;margin:0;padding:0;min-width:0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{border:1px solid #dce4ed;padding:16px;border-radius:12px}.stat b{display:block;font-size:25px}.stat span{color:#54677b;font-size:13px}progress{width:100%;height:20px;accent-color:#146c60}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;border-bottom:1px solid #e4eaf0;padding:12px 8px}td:first-child{max-width:230px;overflow-wrap:anywhere}.scroll{overflow:auto}a{color:#11685d}#gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}figure{margin:0;min-width:0;transition:opacity .15s}figure.unapproved{opacity:.35}figure img{width:100%;height:190px;object-fit:contain;background:#f0f3f6;border-radius:10px}figcaption{font-size:13px;overflow-wrap:anywhere}figure label{display:flex;gap:6px;align-items:center;font-size:13px;font-weight:600;margin-top:6px;cursor:pointer}#status{white-space:pre-wrap} [hidden]{display:none!important}
 .searchWrap{position:relative}.propertyResults{border:1px solid #b6c5d0;border-radius:8px;margin-top:10px;max-height:480px;overflow:auto;background:#fff}
 .propEntry{border-bottom:1px solid #eef2f5}.propEntry:last-child{border-bottom:0}
 .propRow{padding:10px 12px;cursor:pointer;display:flex;gap:10px;align-items:center}.propRow:hover{background:#f3f7f9}.propEntry.selected .propRow{background:#eaf5f2}
@@ -16,7 +16,7 @@
 .photoTile .check{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:#146c60;color:#fff;font-size:14px;line-height:24px;text-align:center;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.25)}
 .photoTile.excluded .check{background:#fff;color:transparent;border:2px solid #b6c5d0}
 #propertySelectionBar{display:flex;align-items:center;gap:12px;margin-top:10px}
-.filtersRow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:10px}.filtersRow label{margin:0 0 6px}
+.filtersRow{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin-top:10px}.filtersRow label{margin:0 0 6px}
 .brandRow{display:grid;grid-template-columns:1fr 2fr;gap:22px;align-items:start;margin-top:6px}
 .logoGallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-top:10px}
 .logoTile{position:relative;border:2px solid #dce4ed;border-radius:10px;padding:8px;cursor:pointer;background:#f7f9fb;text-align:center;user-select:none}
@@ -26,13 +26,14 @@
 .logoTile .check{position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:#146c60;color:#fff;font-size:12px;line-height:18px;display:none}
 .logoTile.selected .check{display:block}
 optgroup{font-weight:700}
-@media(max-width:700px){.grid,#gallery,.filtersRow,.brandRow{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}main{padding:15px}h1{font-size:32px}}
+@media(max-width:700px){.grid,.grid3,#gallery,.filtersRow,.brandRow{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}main{padding:15px}h1{font-size:32px}}
 </style></head><body><main>
 <header><small>LOGO LAB / SERVER BENCHMARK</small><h1>One batch. Every image.</h1><p>Add logos, a title and extra information. Measure how quickly your server processes your photos.</p></header>
 <form id="form" class="card"><fieldset id="fields">
 <div class="searchWrap"><label for="propertySearch">Buscar propiedad (CRM Buil &amp; Fogwill)</label><input id="propertySearch" type="text" autocomplete="off" placeholder="Referencia, urbanización, zona o título…"></div>
 <div class="filtersRow">
-<div><label for="filterZone">Zona</label><input id="filterZone" type="text" autocomplete="off" placeholder="Ej: Estepona"></div>
+<div><label for="filterZone">Zona</label><select id="filterZone"><option value="">Todas las zonas</option></select></div>
+<div><label for="filterSubzone">Subzona</label><select id="filterSubzone"><option value="">Todas las subzonas</option></select></div>
 <div><label for="filterMaxPrice">Precio máximo</label><input id="filterMaxPrice" type="number" min="0" step="1000" placeholder="Ej: 500000"></div>
 <div><label for="filterType">Tipología</label><select id="filterType"><option value="">Todas</option><option value="apartment">Apartamento</option><option value="villa">Villa / Chalet</option><option value="townhouse">Adosado</option><option value="semi_detached">Pareado</option><option value="penthouse">Ático</option><option value="duplex">Dúplex</option><option value="studio">Estudio</option><option value="ground_floor">Planta baja</option><option value="land">Terreno</option><option value="commercial">Local comercial</option><option value="other">Otro</option></select></div>
 </div>
@@ -49,11 +50,12 @@ optgroup{font-weight:700}
 <div><label for="logos">Logos adicionales · PNG transparente (opcional, aparte de la galería)</label><input id="logos" type="file" accept="image/png" multiple><small id="logoCount">No logos selected.</small><br><button type="button" class="secondary" id="clearLogos">Clear logos</button></div></div>
 <p><small>You can add files in several selections. Up to 100 photos and 16 logos per batch (contando los de la galería). Each photo + all logos: up to 80 MB. Photos: at least 256 × 256 px; all images: up to 25 megapixels each.</small></p>
 <label for="title">Title (optional)</label><input id="title" maxlength="150" placeholder="Your headline">
-<div class="grid">
+<div class="grid3">
+<div><label for="adRef">Referencia</label><input id="adRef" maxlength="40" placeholder="Ej: R1234567"></div>
 <div><label for="adZone">Zona (optional)</label><input id="adZone" maxlength="80" placeholder="Ej: Estepona"></div>
 <div><label for="adPrice">Precio (optional)</label><input id="adPrice" maxlength="40" placeholder="Ej: 450.000 €"></div>
 </div>
-<p><small>Zona y precio se dibujan como una etiqueta en la esquina superior derecha de la foto.</small></p>
+<p><small>La referencia siempre se dibuja como una etiqueta en la esquina superior derecha de la foto (junto con zona y precio si los completás), para saber siempre de qué propiedad se trata.</small></p>
 <label for="information">Additional information (optional)</label><textarea id="information" maxlength="500" rows="3" placeholder="Your message, date or description"></textarea>
 <label for="format">Formato de salida</label>
 <select id="format">
@@ -139,8 +141,27 @@ $('brand').addEventListener('change',()=>{currentBrand=$('brand').value;renderBr
 loadBrands();
  
 /* ---- Buscador de propiedades (CRM Buil & Fogwill) ---- */
+/* Mismo arbol de zonas / subzonas que el desplegable "Zonas" del admin del CRM
+   (buil-fogwill.com/admin/properties), para buscar exactamente igual. */
+const ZONES=[{"zone":"Alhaurín de la Torre","subzones":["Alhaurín de la Torre","Lauro Golf"]},{"zone":"Alhaurín el Grande","subzones":["Alhaurín el Grande","Alhaurin Golf","Villafranco del Guadalhorce","Valle del Sol"]},{"zone":"Antequera","subzones":["Antequera","Bobadilla","Gobantes"]},{"zone":"Benahavís","subzones":["Benahavís","El Madroñal","La Heredia","La Quinta","La Zagaleta","Los Almendros","Los Arqueros","Monte Halcones"]},{"zone":"Benalmádena","subzones":["Benalmádena","Benalmádena Costa","Benalmádena Pueblo","Arroyo de la Miel","Carvajal","Higuerón","La Capellanía","Torremuelle","Torrequebrada"]},{"zone":"Cártama","subzones":["Cártama","Estación de Cártama","Gibralgalia","Zalea"]},{"zone":"Casares","subzones":["Casares","Casares Pueblo","Casares Playa","Doña Julia"]},{"zone":"Coín","subzones":["Coín"]},{"zone":"Estepona","subzones":["Estepona","El Paraíso","Cancelada","Atalaya Isdabe","Bel Air","Benamara","Benavista","Costalita","Diana Park","El Padrón","El Presidente","Hacienda del Sol","New Golden Mile","Selwo","Valle Romano","Atalaya"]},{"zone":"Fuengirola","subzones":["Fuengirola","Los Boliches","Los Pacos","Torreblanca"]},{"zone":"Istán","subzones":["Istán"]},{"zone":"Málaga","subzones":["Rincón de la Victoria","Málaga","Málaga Centro","Málaga Este","Bailén Miraflores","Puerto de la Torre","Los Prados"]},{"zone":"Manilva","subzones":["Manilva","La Duquesa","San Luis de Sabinillas","Punta Chullera"]},{"zone":"Marbella","subzones":["Marbella","Bahía de Marbella","Cabopino","Puerto de Cabopino","Costabella","Cortijo Blanco","El Rosario","Elviria","Guadalmina Alta","Guadalmina Baja","Las Brisas","Las Chapas","Los Monteros","Marbesa","Nagüeles","Nueva Andalucía","Puerto Banús","Reserva de Marbella","Río Real","Santa Clara","Sierra Blanca","The Golden Mile","Torre Real","San Pedro de Alcántara"]},{"zone":"Mijas","subzones":["Mijas","Mijas Pueblo","Mijas Costa","La Cala","La Cala de Mijas","La Cala Golf","La Cala Hills","Calahonda","Calanova Golf","Calypso","Campo Mijas","Cerros del Águila","El Coto","El Faro","El Chaparral","La Sierrezuela","Las Lagunas","Miraflores","Riviera del Sol","Mijas Golf"]},{"zone":"Ojén","subzones":["Ojén","La Mairena"]},{"zone":"Ronda","subzones":["Ronda"]},{"zone":"Torremolinos","subzones":["Torremolinos","Bajondillo","La Carihuela","La Colina","Los Álamos","Montemar","Playamar","Torremar","Torremolinos Centro"]},{"zone":"San Roque","subzones":["San Roque","San Roque Club","Guadiaro","Pueblo Nuevo de Guadiaro","San Enrique","Torreguadiaro","Sotogrande","Sotogrande Alto","Sotogrande Costa","Sotogrande Marina","Sotogrande Playa","Sotogrande Puerto","San Diego","La Alcaidesa","Algeciras","La Línea de la Concepción","Los Barrios"]},{"zone":"Inland Villages","subzones":["Pizarra","Mollina","Monda","Montejaque","Júzcar","Jubrique","Guaro","Alameda","Algatocín","Ardales","El Chorro","Arriate","Benadalid","Almogía","Álora","Alozaina","Alpandeire","Archidona","Teba","Tolox","Valle de Abdalajís","Villanueva de Algaidas","Jimera de Líbar","Genalguacil","Fuente de Piedra","Gaucín","Yunquera","Casabermeja","Casarabonela","Cañete la Real","Campillos","Benarrabá","Benaoján","Benalauría"]},{"zone":"Other Axarquía","subzones":["Faraján","Cortes de la Frontera","Cuevas Bajas","Cuevas de San Marcos","Cuevas del Becerro","El Burgo","Cartajima","Carratraca"]}];
 const propertySearch=$('propertySearch'),propertyResults=$('propertyResults'),propertyStatus=$('propertyStatus').firstElementChild;
-const filterZone=$('filterZone'),filterMaxPrice=$('filterMaxPrice'),filterType=$('filterType');
+const filterZone=$('filterZone'),filterSubzone=$('filterSubzone'),filterMaxPrice=$('filterMaxPrice'),filterType=$('filterType');
+for(const z of ZONES){const opt=document.createElement('option');opt.value=z.zone;opt.textContent=z.zone;filterZone.append(opt)}
+function renderSubzoneOptions(){
+  const zoneName=filterZone.value;
+  filterSubzone.replaceChildren();
+  const allOpt=document.createElement('option');allOpt.value='';allOpt.textContent='Todas las subzonas';filterSubzone.append(allOpt);
+  const entry=ZONES.find(z=>z.zone===zoneName);
+  if(!entry){filterSubzone.disabled=true;return}
+  filterSubzone.disabled=false;
+  entry.subzones.forEach((sub,i)=>{
+    const opt=document.createElement('option');opt.value=sub;
+    opt.textContent=(i===0&&sub===zoneName)?sub+' (zona general, sin subzona)':sub;
+    filterSubzone.append(opt);
+  });
+}
+renderSubzoneOptions();
+filterZone.addEventListener('change',()=>{renderSubzoneOptions();runSearch()});
 let searchTimer=null,searchAbort=null,selectedProperties=new Map(),lastResults=[],propertyExclusions=new Map();
 const money=n=>n==null||n===''?'':new Intl.NumberFormat('es-ES',{maximumFractionDigits:0}).format(Number(n))+' €';
 function includedImages(p){
@@ -230,14 +251,15 @@ function renderPropertyResults(list){
 }
 function scheduleSearch(){clearTimeout(searchTimer);searchTimer=setTimeout(runSearch,300)}
 async function runSearch(){
-  const q=propertySearch.value.trim(),zone=filterZone.value.trim(),maxPrice=filterMaxPrice.value.trim(),type=filterType.value;
+  const q=propertySearch.value.trim(),zone=filterZone.value,subzone=filterSubzone.value,maxPrice=filterMaxPrice.value.trim(),type=filterType.value;
   propertyStatus.textContent='';
-  if(q.length<2&&!zone&&!maxPrice&&!type){propertyResults.hidden=true;propertyResults.replaceChildren();lastResults=[];return}
+  if(q.length<2&&!zone&&!subzone&&!maxPrice&&!type){propertyResults.hidden=true;propertyResults.replaceChildren();lastResults=[];return}
   if(searchAbort)searchAbort.abort();
   searchAbort=new AbortController();
   const params=new URLSearchParams();
   if(q.length>=2)params.set('q',q);
   if(zone)params.set('zone',zone);
+  if(subzone)params.set('subzone',subzone);
   if(maxPrice)params.set('max_price',maxPrice);
   if(type)params.set('type',type);
   try{
@@ -247,7 +269,7 @@ async function runSearch(){
   }catch(err){if(err.name!=='AbortError')propertyStatus.textContent='Error buscando: '+err.message}
 }
 propertySearch.addEventListener('input',scheduleSearch);
-filterZone.addEventListener('input',scheduleSearch);
+filterSubzone.addEventListener('change',runSearch);
 filterMaxPrice.addEventListener('input',scheduleSearch);
 filterType.addEventListener('change',runSearch);
 $('addSelectedProperties').onclick=async()=>{
@@ -257,6 +279,7 @@ $('addSelectedProperties').onclick=async()=>{
   let totalLoaded=0,totalFailed=0;
   for(const p of list){
     if(p.headline)$('title').value=p.headline.slice(0,150);
+    $('adRef').value=(p.ref||'').slice(0,40);
     $('adZone').value=(p.urbanization||p.zone||'').slice(0,80);
     $('adPrice').value=money(p.price).slice(0,40);
     const bits=[p.bedrooms?p.bedrooms+' dorm':'',p.bathrooms?p.bathrooms+' baños':'',p.built_area?p.built_area+' m²':'',p.ref?'Ref. '+p.ref:''].filter(Boolean);
@@ -301,10 +324,9 @@ function previews(){const successful=results.filter(r=>r.data);$('previewCard').
 }}
 $('approveAll').onclick=()=>{for(const box of $('gallery').querySelectorAll('.approveBox')){box.checked=true;box.closest('figure').classList.remove('unapproved')}};
 $('approveNone').onclick=()=>{for(const box of $('gallery').querySelectorAll('.approveBox')){box.checked=false;box.closest('figure').classList.add('unapproved')}};
-$('form').addEventListener('submit',async e=>{e.preventDefault();if(running)return;if(!photos.length){$('status').textContent='Select at least one photo.';return}const title=$('title').value.trim(),info=$('information').value.trim(),adZone=$('adZone').value.trim(),adPrice=$('adPrice').value.trim(),format=$('format').value;const allLogos=[...galleryLogos,...logos];if(!allLogos.length&&!title&&!info&&!adZone&&!adPrice){$('status').textContent='Add at least one logo or some text.';return}const logoBytes=allLogos.reduce((s,f)=>s+f.size,0);if(photos.some(p=>p.size+logoBytes>79*1024*1024)){$('status').textContent='Each photo plus logos must be under 79 MB (space is reserved for the upload form).';return}
+$('form').addEventListener('submit',async e=>{e.preventDefault();if(running)return;if(!photos.length){$('status').textContent='Select at least one photo.';return}const title=$('title').value.trim(),info=$('information').value.trim(),adRef=$('adRef').value.trim(),adZone=$('adZone').value.trim(),adPrice=$('adPrice').value.trim(),format=$('format').value;const allLogos=[...galleryLogos,...logos];if(!allLogos.length&&!title&&!info&&!adRef&&!adZone&&!adPrice){$('status').textContent='Add at least one logo or some text.';return}const logoBytes=allLogos.reduce((s,f)=>s+f.size,0);if(photos.some(p=>p.size+logoBytes>79*1024*1024)){$('status').textContent='Each photo plus logos must be under 79 MB (space is reserved for the upload form).';return}
 running=true;stopRequested=false;results=[];elapsed=0;$('fields').disabled=true;$('submit').disabled=true;$('stop').disabled=false;$('zip').disabled=true;$('csv').disabled=true;$('downloadStatus').textContent='';$('rows').replaceChildren();$('gallery').replaceChildren();$('previewCard').hidden=true;$('report').hidden=false;$('progress').max=photos.length;$('progress').value=0;summary();const start=performance.now();
-try{for(const photo of photos){if(stopRequested)break;$('status').textContent=`Processing ${results.length+1} of ${photos.length}: ${photo.name}`;const body=new FormData();body.append('photo',photo);for(const logo of allLogos)body.append('logos',logo);body.append('title',title);body.append('information',info);body.append('zone',adZone);body.append('price',adPrice);body.append('format',format);let row;try{const data=await jsonResponse(await fetch('/process',{method:'POST',body}));row={name:photo.name,data}}catch(err){row={name:photo.name,error:err.message}}results.push(row);addRow(row);elapsed=performance.now()-start;$('progress').value=results.length;summary()}}finally{elapsed=performance.now()-start;summary();running=false;$('fields').disabled=false;$('submit').disabled=false;$('stop').disabled=true;$('csv').disabled=!results.length;$('zip').disabled=!results.some(r=>r.data);$('status').textContent=`${stopRequested?'Stopped':'Finished'}. ${results.filter(r=>r.data).length} completed, ${results.filter(r=>!r.data).length} failed, ${photos.length-results.length} not processed.`;previews()}});
+try{for(const photo of photos){if(stopRequested)break;$('status').textContent=`Processing ${results.length+1} of ${photos.length}: ${photo.name}`;const body=new FormData();body.append('photo',photo);for(const logo of allLogos)body.append('logos',logo);body.append('title',title);body.append('information',info);body.append('ref',adRef);body.append('zone',adZone);body.append('price',adPrice);body.append('format',format);let row;try{const data=await jsonResponse(await fetch('/process',{method:'POST',body}));row={name:photo.name,data}}catch(err){row={name:photo.name,error:err.message}}results.push(row);addRow(row);elapsed=performance.now()-start;$('progress').value=results.length;summary()}}finally{elapsed=performance.now()-start;summary();running=false;$('fields').disabled=false;$('submit').disabled=false;$('stop').disabled=true;$('csv').disabled=!results.length;$('zip').disabled=!results.some(r=>r.data);$('status').textContent=`${stopRequested?'Stopped':'Finished'}. ${results.filter(r=>r.data).length} completed, ${results.filter(r=>!r.data).length} failed, ${photos.length-results.length} not processed.`;previews()}});
 $('zip').onclick=async()=>{const approved=[...$('gallery').querySelectorAll('.approveBox:checked')].map(b=>b.dataset.file);if(!approved.length){$('downloadStatus').textContent='No hay ninguna imagen aprobada.';return}$('zip').disabled=true;$('submit').disabled=true;$('downloadStatus').textContent='Preparing ZIP…';try{const data=await jsonResponse(await fetch('/archive',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({files:approved})}));const url='/results/'+data.file+'?download=1';const link=document.createElement('a');link.href=url;link.textContent='Download ZIP ('+approved.length+' imágenes)';$('downloadStatus').replaceChildren(link);link.click()}catch(err){$('downloadStatus').textContent=err.message}finally{$('zip').disabled=false;$('submit').disabled=false}};
 $('csv').onclick=()=>{const quote=value=>'"'+String(value).replace(/"/g,'""')+'"';const safe=value=>/^[=+@\-\t\r]/.test(String(value))?"'"+value:value;const lines=[['photo','status','width','height','read_ms','logos_ms','text_ms','save_ms','total_ms','error'],...results.map(r=>{const t=r.data?.timing;return [safe(r.name),r.data?'ok':'failed',r.data?.width??'',r.data?.height??'',...['decode_ms','logos_ms','text_ms','save_ms','total_ms'].map(k=>t?t[k]:''),safe(r.error||'')]})];const url=URL.createObjectURL(new Blob(['﻿'+lines.map(row=>row.map(quote).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='batch_timings.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 </script></body></html>
- 
