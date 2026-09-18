@@ -2,7 +2,19 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Logo Lab · Batch benchmark</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#eff3f7;color:#1b2d3e;font:16px system-ui,sans-serif}main{max-width:1100px;margin:36px auto;padding:24px}small,p{line-height:1.6;color:#54677b}header small{letter-spacing:2px;font-weight:700;color:#18776a}h1{font-size:40px;letter-spacing:-1px;margin:8px 0}h2{margin-top:0;font-size:22px}.card{background:white;border:1px solid #dce4ed;border-radius:18px;padding:24px;margin:22px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}label{display:block;font-weight:650;margin:12px 0 8px}input,textarea,select{width:100%;font:inherit;border:1px solid #b6c5d0;border-radius:8px;padding:12px}input[type=file]{border-style:dashed}textarea{resize:vertical}button,.download{display:inline-block;border:0;background:#146c60;color:white;padding:12px 18px;border-radius:8px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;margin:8px 8px 0 0}button.secondary{background:#e9eff3;color:#334c61}button:disabled{opacity:.5;cursor:default}fieldset{border:0;margin:0;padding:0;min-width:0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{border:1px solid #dce4ed;padding:16px;border-radius:12px}.stat b{display:block;font-size:25px}.stat span{color:#54677b;font-size:13px}progress{width:100%;height:20px;accent-color:#146c60}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;border-bottom:1px solid #e4eaf0;padding:12px 8px}td:first-child{max-width:230px;overflow-wrap:anywhere}.scroll{overflow:auto}a{color:#11685d}#gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}figure{margin:0;min-width:0;transition:opacity .15s}figure.unapproved{opacity:.35}figure img{width:100%;height:190px;object-fit:contain;background:#f0f3f6;border-radius:10px}figcaption{font-size:13px;overflow-wrap:anywhere}figure label{display:flex;gap:6px;align-items:center;font-size:13px;font-weight:600;margin-top:6px;cursor:pointer}#status{white-space:pre-wrap} [hidden]{display:none!important}
-.searchWrap{position:relative}.propertyResults{border:1px solid #b6c5d0;border-radius:8px;margin-top:10px;max-height:340px;overflow:auto;background:#fff}.propertyResults div{padding:10px 12px;cursor:pointer;border-bottom:1px solid #eef2f5;display:flex;gap:10px;align-items:center}.propertyResults div:last-child{border-bottom:0}.propertyResults div:hover{background:#f3f7f9}.propertyResults div.selected{background:#eaf5f2}.propertyResults img{width:48px;height:36px;object-fit:cover;border-radius:6px;background:#eef2f5;flex:none}.propertyResults b{display:block;font-size:14px}.propertyResults small{color:#54677b;display:block}.propertyResults input[type=checkbox]{width:auto;flex:none;margin:0}
+.searchWrap{position:relative}.propertyResults{border:1px solid #b6c5d0;border-radius:8px;margin-top:10px;max-height:480px;overflow:auto;background:#fff}
+.propEntry{border-bottom:1px solid #eef2f5}.propEntry:last-child{border-bottom:0}
+.propRow{padding:10px 12px;cursor:pointer;display:flex;gap:10px;align-items:center}.propRow:hover{background:#f3f7f9}.propEntry.selected .propRow{background:#eaf5f2}
+.propertyResults img.thumb{width:48px;height:36px;object-fit:cover;border-radius:6px;background:#eef2f5;flex:none}.propertyResults b{display:block;font-size:14px}.propertyResults small{color:#54677b;display:block}.propertyResults input[type=checkbox]{width:auto;flex:none;margin:0}
+.photoToggle{background:none;border:0;color:#146c60;font:inherit;font-size:13px;font-weight:700;cursor:pointer;padding:0;margin-top:4px}
+.photoPicker{padding:14px 16px 18px;background:#f7f9fb;border-top:1px dashed #dce4ed}
+.photoPickerHead{margin-bottom:10px;font-size:13px;font-weight:600;color:#334c61}
+.photoGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.photoTile{position:relative;border:2px solid #dce4ed;border-radius:8px;overflow:hidden;cursor:pointer;background:#fff;transition:opacity .15s}
+.photoTile.excluded{opacity:.4}
+.photoTile img{width:100%;height:110px;object-fit:cover;display:block;background:#eef2f5}
+.photoTile .check{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:#146c60;color:#fff;font-size:14px;line-height:24px;text-align:center;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.photoTile.excluded .check{background:#fff;color:transparent;border:2px solid #b6c5d0}
 #propertySelectionBar{display:flex;align-items:center;gap:12px;margin-top:10px}
 .filtersRow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:10px}.filtersRow label{margin:0 0 6px}
 .brandRow{display:grid;grid-template-columns:1fr 2fr;gap:22px;align-items:start;margin-top:6px}
@@ -27,12 +39,12 @@ optgroup{font-weight:700}
 <p id="propertyStatus"><small></small></p>
 <div id="propertyResults" class="propertyResults" hidden></div>
 <p id="propertySelectionBar" hidden><button type="button" id="addSelectedProperties">Agregar fotos de las seleccionadas</button><small id="selectedCount"></small></p>
-
+ 
 <div class="brandRow">
 <div><label for="brand">Marca</label><select id="brand"></select><p id="brandHint"><small></small></p></div>
 <div><label>Logos de la marca (ya precargados — haz clic para elegir, hasta 16)</label><div id="logoGallery" class="logoGallery"></div><p id="galleryStatus"><small></small></p></div>
 </div>
-
+ 
 <div class="grid"><div><label for="photos">Photos</label><input id="photos" type="file" accept="image/jpeg,image/png,image/webp" multiple><small id="photoCount">No photos selected.</small><br><button type="button" class="secondary" id="clearPhotos">Clear photos</button></div>
 <div><label for="logos">Logos adicionales · PNG transparente (opcional, aparte de la galería)</label><input id="logos" type="file" accept="image/png" multiple><small id="logoCount">No logos selected.</small><br><button type="button" class="secondary" id="clearLogos">Clear logos</button></div></div>
 <p><small>You can add files in several selections. Up to 100 photos and 16 logos per batch (contando los de la galería). Each photo + all logos: up to 80 MB. Photos: at least 256 × 256 px; all images: up to 25 megapixels each.</small></p>
@@ -76,7 +88,7 @@ function counts(){$('photoCount').textContent=photos.length+' photos selected';$
 for(const kind of ['photos','logos']){$(kind).addEventListener('change',()=>{const files=Array.from($(kind).files);const max=kind==='photos'?100:16;let old=kind==='photos'?photos:logos;if(kind==='logos'&&galleryLogos.length+old.length+files.length>max){$('status').textContent=`Máximo ${max} logos en total (contando los de la galería). Elige menos.`;$(kind).value='';return}if(old.length+files.length>max){$('status').textContent=`Maximum ${max} ${kind}. Clear the selection or add fewer files.`;$(kind).value='';return}if(kind==='photos')photos.push(...files);else logos.push(...files);$(kind).value='';counts()})}
 $('clearPhotos').onclick=()=>{photos=[];counts()};$('clearLogos').onclick=()=>{logos=[];counts()};$('stop').onclick=()=>{stopRequested=true;$('stop').disabled=true;$('status').textContent='Stopping after the current photo…'};
 async function jsonResponse(res){let data;try{data=await res.json()}catch{throw Error('The server returned an unreadable response. Check its terminal.')}if(!res.ok)throw Error(data.error||`HTTP ${res.status}`);return data}
-
+ 
 /* ---- Marca y galería de logos precargados ---- */
 let brands={},currentBrand=null,galleryLogos=[],logoBlobCache=new Map();
 async function loadBrands(){
@@ -125,17 +137,47 @@ async function toggleGalleryLogo(logo,tile){
 }
 $('brand').addEventListener('change',()=>{currentBrand=$('brand').value;renderBrand()});
 loadBrands();
-
+ 
 /* ---- Buscador de propiedades (CRM Buil & Fogwill) ---- */
 const propertySearch=$('propertySearch'),propertyResults=$('propertyResults'),propertyStatus=$('propertyStatus').firstElementChild;
 const filterZone=$('filterZone'),filterMaxPrice=$('filterMaxPrice'),filterType=$('filterType');
-let searchTimer=null,searchAbort=null,selectedProperties=new Map(),lastResults=[];
+let searchTimer=null,searchAbort=null,selectedProperties=new Map(),lastResults=[],propertyExclusions=new Map();
 const money=n=>n==null||n===''?'':new Intl.NumberFormat('es-ES',{maximumFractionDigits:0}).format(Number(n))+' €';
+function includedImages(p){
+  const key=p.id??p.ref,excl=propertyExclusions.get(key),imgs=p.images||[];
+  return excl?imgs.filter(u=>!excl.has(u)):imgs;
+}
 function updateSelectionBar(){
   const n=selectedProperties.size;
   $('propertySelectionBar').hidden=!n;
   $('selectedCount').textContent=n?`${n} propiedad${n===1?'':'es'} seleccionada${n===1?'':'s'}`:'';
   $('addSelectedProperties').disabled=!n;
+}
+function buildPhotoPicker(container,p,key,onChange){
+  const images=p.images||[];
+  const head=document.createElement('div');head.className='photoPickerHead';
+  const grid=document.createElement('div');grid.className='photoGrid';
+  function refreshHead(){head.textContent=`${includedImages(p).length} de ${images.length} fotos seleccionadas para esta propiedad — clic en una foto para incluirla o quitarla`}
+  refreshHead();
+  container.append(head,grid);
+  for(const url of images){
+    const tile=document.createElement('div');tile.className='photoTile';
+    const img=document.createElement('img');img.loading='lazy';img.alt='';img.src='/api/proxy-image?url='+encodeURIComponent(url);
+    const check=document.createElement('div');check.className='check';check.textContent='✓';
+    const excl=propertyExclusions.get(key);
+    if(excl&&excl.has(url))tile.classList.add('excluded');
+    tile.append(img,check);
+    tile.addEventListener('click',()=>{
+      let set=propertyExclusions.get(key);
+      if(!set){set=new Set();propertyExclusions.set(key,set)}
+      if(set.has(url)){set.delete(url)}else{set.add(url)}
+      if(!set.size)propertyExclusions.delete(key);
+      tile.classList.toggle('excluded');
+      refreshHead();
+      onChange();
+    });
+    grid.append(tile);
+  }
 }
 function renderPropertyResults(list){
   lastResults=list;
@@ -143,24 +185,46 @@ function renderPropertyResults(list){
   if(!list.length){propertyResults.hidden=true;return}
   for(const p of list){
     const key=p.id??p.ref;
-    const row=document.createElement('div');
-    if(selectedProperties.has(key))row.classList.add('selected');
+    const entry=document.createElement('div');entry.className='propEntry';
+    if(selectedProperties.has(key))entry.classList.add('selected');
+    const row=document.createElement('div');row.className='propRow';
     const check=document.createElement('input');check.type='checkbox';check.checked=selectedProperties.has(key);
-    const img=document.createElement('img');img.loading='lazy';img.alt='';if(p.thumbnail)img.src='/api/proxy-image?url='+encodeURIComponent(p.thumbnail);
+    const img=document.createElement('img');img.className='thumb';img.loading='lazy';img.alt='';if(p.thumbnail)img.src='/api/proxy-image?url='+encodeURIComponent(p.thumbnail);
     const info=document.createElement('div');
     const b=document.createElement('b');b.textContent=(p.ref?p.ref+' — ':'')+(p.headline||'(sin título)');
     const small=document.createElement('small');
-    const bits=[p.urbanization||p.zone||'',money(p.price),p.bedrooms?p.bedrooms+' dorm':'',p.image_count+' fotos'].filter(Boolean);
-    small.textContent=bits.join(' · ');
-    info.append(b,small);row.append(check,img,info);
-    const toggle=()=>{
-      if(selectedProperties.has(key)){selectedProperties.delete(key);row.classList.remove('selected');check.checked=false}
-      else{selectedProperties.set(key,p);row.classList.add('selected');check.checked=true}
+    const otherBits=[p.urbanization||p.zone||'',money(p.price),p.bedrooms?p.bedrooms+' dorm':''].filter(Boolean);
+    const fotosSpan=document.createElement('span');
+    const refreshFotosLabel=()=>{fotosSpan.textContent=`${includedImages(p).length}/${p.image_count} fotos`};
+    refreshFotosLabel();
+    small.textContent=otherBits.join(' · ')+(otherBits.length?' · ':'');
+    small.append(fotosSpan);
+    info.append(b,small);
+    const picker=document.createElement('div');picker.className='photoPicker';picker.hidden=true;
+    let photoToggle=null;
+    if(p.image_count>0){
+      photoToggle=document.createElement('button');photoToggle.type='button';photoToggle.className='photoToggle';photoToggle.textContent='Ver fotos ▾';
+      info.append(photoToggle);
+    }
+    row.append(check,img,info);
+    const toggleSelect=()=>{
+      if(selectedProperties.has(key)){selectedProperties.delete(key);entry.classList.remove('selected');check.checked=false}
+      else{selectedProperties.set(key,p);entry.classList.add('selected');check.checked=true}
       updateSelectionBar();
     };
-    check.addEventListener('click',e=>{e.stopPropagation();toggle()});
-    row.addEventListener('click',toggle);
-    propertyResults.append(row);
+    check.addEventListener('click',e=>{e.stopPropagation();toggleSelect()});
+    row.addEventListener('click',toggleSelect);
+    if(photoToggle){
+      photoToggle.addEventListener('click',e=>{
+        e.stopPropagation();
+        const opening=picker.hidden;
+        picker.hidden=!opening;
+        photoToggle.textContent=opening?'Ocultar fotos ▴':'Ver fotos ▾';
+        if(opening&&!picker.dataset.built){buildPhotoPicker(picker,p,key,refreshFotosLabel);picker.dataset.built='1'}
+      });
+    }
+    entry.append(row,picker);
+    propertyResults.append(entry);
   }
   propertyResults.hidden=false;
 }
@@ -198,7 +262,7 @@ $('addSelectedProperties').onclick=async()=>{
     const bits=[p.bedrooms?p.bedrooms+' dorm':'',p.bathrooms?p.bathrooms+' baños':'',p.built_area?p.built_area+' m²':'',p.ref?'Ref. '+p.ref:''].filter(Boolean);
     $('information').value=bits.join(' · ').slice(0,500);
     const room=Math.max(0,100-photos.length);
-    const urls=(p.images||[]).slice(0,room);
+    const urls=includedImages(p).slice(0,room);
     if(!urls.length){propertyStatus.textContent=room===0?'Ya tienes 100 fotos cargadas: vacía "Photos" antes de traer más.':`${p.ref||'Una propiedad'} no tiene fotos en el CRM.`;continue}
     let loaded=0,failed=0;
     propertyStatus.textContent=`Cargando fotos de ${p.ref||''}… (0/${urls.length})`;
@@ -223,7 +287,7 @@ $('addSelectedProperties').onclick=async()=>{
   updateSelectionBar();
   $('addSelectedProperties').disabled=false;
 };
-
+ 
 function summary(){const ok=results.filter(r=>r.data),total=ok.reduce((s,r)=>s+r.data.timing.total_ms,0);$('stats').replaceChildren();for(const [label,value] of [['Completed',`${ok.length} / ${photos.length}`],['Failed',results.length-ok.length],['Processing time',number(total/1000)+' s'],['Average / completed photo',ok.length?ms(total/ok.length):'—'],['Processing throughput',total?number(ok.length/(total/1000))+' photos/s':'—'],['Batch elapsed',number(elapsed/1000)+' s']]){const div=document.createElement('div');div.className='stat';const b=document.createElement('b');b.textContent=value;const span=document.createElement('span');span.textContent=label;div.append(b,span);$('stats').append(div)}}
 function addRow(r){const row=$('rows').insertRow();row.insertCell().textContent=r.name;if(r.data){const t=r.data.timing;for(const key of ['decode_ms','logos_ms','text_ms','save_ms','total_ms'])row.insertCell().textContent=ms(t[key]);const link=document.createElement('a');link.href='/results/'+r.data.file+'?download=1';link.textContent='Download PNG';row.insertCell().append(link)}else{const cell=row.insertCell();cell.colSpan=6;cell.textContent='Failed: '+r.error}}
 function previews(){const successful=results.filter(r=>r.data);$('previewCard').hidden=!successful.length;$('gallery').replaceChildren();for(const r of successful){
@@ -243,3 +307,4 @@ try{for(const photo of photos){if(stopRequested)break;$('status').textContent=`P
 $('zip').onclick=async()=>{const approved=[...$('gallery').querySelectorAll('.approveBox:checked')].map(b=>b.dataset.file);if(!approved.length){$('downloadStatus').textContent='No hay ninguna imagen aprobada.';return}$('zip').disabled=true;$('submit').disabled=true;$('downloadStatus').textContent='Preparing ZIP…';try{const data=await jsonResponse(await fetch('/archive',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({files:approved})}));const url='/results/'+data.file+'?download=1';const link=document.createElement('a');link.href=url;link.textContent='Download ZIP ('+approved.length+' imágenes)';$('downloadStatus').replaceChildren(link);link.click()}catch(err){$('downloadStatus').textContent=err.message}finally{$('zip').disabled=false;$('submit').disabled=false}};
 $('csv').onclick=()=>{const quote=value=>'"'+String(value).replace(/"/g,'""')+'"';const safe=value=>/^[=+@\-\t\r]/.test(String(value))?"'"+value:value;const lines=[['photo','status','width','height','read_ms','logos_ms','text_ms','save_ms','total_ms','error'],...results.map(r=>{const t=r.data?.timing;return [safe(r.name),r.data?'ok':'failed',r.data?.width??'',r.data?.height??'',...['decode_ms','logos_ms','text_ms','save_ms','total_ms'].map(k=>t?t[k]:''),safe(r.error||'')]})];const url=URL.createObjectURL(new Blob(['﻿'+lines.map(row=>row.map(quote).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='batch_timings.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 </script></body></html>
+ 
